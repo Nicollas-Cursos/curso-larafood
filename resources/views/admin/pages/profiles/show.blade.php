@@ -25,10 +25,11 @@
             <form action="{{ route('profiles.destroy', $profile->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-sm btn-danger">
+                <button type="submit" class="btn btn-sm btn-danger mb-1">
                     Deletar esse perfil
                 </button>
             </form>
+            <a href="{{ route('profile.permissions', $profile->id) }}" class="btn btn-dark btn-sm">Ver permissões desse perfil</a>
         </div>
     </div>
 @stop

@@ -13,12 +13,12 @@ class CreatePlansTable extends Migration
      */
     public function up()
     {
-        Schema::create('plans', function (Blueprint $table) {
+        Schema::create("plans", function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('url')->unique();
-            $table->double('price', 10, 2);
-            $table->string('description')->nullable();
+            $table->string("name")->unique();
+            $table->string("url")->unique();
+            $table->double("price", 10, 2);
+            $table->string("description")->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreatePlansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plans');
+        Schema::dropIfExists("plans");
     }
 }
