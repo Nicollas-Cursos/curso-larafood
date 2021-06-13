@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin\ACL;
 
-use App\Models\Profile;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUpdateProfile;
+use App\Http\Requests\StoreUpdatePermission;
 
-class ProfileController extends Controller
+class PermissionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +16,10 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $profiles = Profile::latest()->paginate();
+        $permissions = Permission::latest()->paginate();
 
-        return view("admin.pages.profiles.index", [
-            "profiles" => $profiles
+        return view("admin.pages.permissions.index", [
+            "permissions" => $permissions
         ]);
     }
 
@@ -30,20 +30,20 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        return view("admin.pages.profiles.create");
+        return view("admin.pages.permissions.create");
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreUpdateProfile  $request
+     * @param  \App\Http\Requests\StoreUpdatePermission  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUpdateProfile $request)
+    public function store(StoreUpdatePermission $request)
     {
-        Profile::create($request->all());
+        Permission::create($request->all());
 
-        return redirect()->route("profiles.index");
+        return redirect()->route("permissions.index");
     }
 
     /**
@@ -54,12 +54,12 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        if(!$profile = Profile::find($id)) {
+        if(!$permission = Permission::find($id)) {
             return redirect()->back();
         }
 
-        return view("admin.pages.profiles.show", [
-            "profile" => $profile
+        return view("admin.pages.permissions.show", [
+            "permission" => $permission
         ]);
     }
 
@@ -71,31 +71,31 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        if(!$profile = Profile::find($id)) {
+        if(!$permission = Permission::find($id)) {
             return redirect()->back();
         }
 
-        return view("admin.pages.profiles.edit", [
-            "profile" => $profile
+        return view("admin.pages.permissions.edit", [
+            "permission" => $permission
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\StoreUpdateProfile  $request
+     * @param  \App\Http\Requests\StoreUpdatePermission  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, StoreUpdateProfile $request)
+    public function update($id, StoreUpdatePermission $request)
     {
-        if(!$profile = Profile::find($id)) {
+        if(!$permission = Permission::find($id)) {
             return redirect()->back();
         }
 
-        $profile->update($request->all());
+        $permission->update($request->all());
 
-        return redirect()->route("profiles.index");
+        return redirect()->route("permissions.index");
     }
 
     /**
@@ -106,22 +106,22 @@ class ProfileController extends Controller
      */
     public function destroy($id)
     {
-        if(!$profile = Profile::find($id)) {
+        if(!$permission = Permission::find($id)) {
             return redirect()->back();
         }
 
-        $profile->delete();
+        $permission->delete();
 
-        return redirect()->route("profiles.index");
+        return redirect()->route("permissions.index");
     }
 
     public function search(Request $request)
     {
         $filters = $request->except("_token");
-        $filteredProfiles = Profile::search($request->filter);
+        $filteredPermissions = Permission::search($request->filter);
 
-        return view("admin.pages.profiles.index", [
-            "profiles" => $filteredProfiles,
+        return view("admin.pages.permissions.index", [
+            "permissions" => $filteredPermissions,
             "filters" => $filters
         ]);
     }

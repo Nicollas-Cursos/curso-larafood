@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Profile extends Model
+class Permission extends Model
 {
     use HasFactory;
 
@@ -15,7 +15,7 @@ class Profile extends Model
 
     public static function search($filter = null)
     {
-        return Profile::query()
+        return Permission::query()
             ->where(function($query) use ($filter) {
                 $query->where("name", "LIKE", "%{$filter}%")
                       ->orWhere("description", "LIKE", "%{$filter}%");
