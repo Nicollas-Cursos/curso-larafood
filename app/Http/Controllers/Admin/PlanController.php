@@ -52,17 +52,6 @@ class PlanController extends Controller
         ]);
     }
 
-    public function destroy($url)
-    {
-        if(!$plan = Plan::whereUrl($url)->first()) {
-            return redirect()->back();
-        }
-
-        $plan->delete();
-
-        return redirect()->route("plans.index");
-    }
-
     public function update($url, StoreUpdatePlan $request)
     {
         if(!$plan = Plan::whereUrl($url)->first()) {
@@ -70,6 +59,17 @@ class PlanController extends Controller
         }
 
         $plan->update($request->all());
+
+        return redirect()->route("plans.index");
+    }
+
+    public function destroy($url)
+    {
+        if(!$plan = Plan::whereUrl($url)->first()) {
+            return redirect()->back();
+        }
+
+        $plan->delete();
 
         return redirect()->route("plans.index");
     }

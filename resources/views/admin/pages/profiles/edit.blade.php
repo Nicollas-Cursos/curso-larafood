@@ -1,17 +1,17 @@
 @extends('adminlte::page')
 
-@section('title', "Editar Plano: {$plan->name}")
+@section('title', "Editar Perfil: {$profile->name}")
 
 @section('content_header')
-    <h1 class="mb-2">Editando o plano: <b>{{ $plan->name }}</b></h1>
+    <h1 class="mb-2">Editando o perfil: <b>{{ $profile->name }}</b></h1>
 @stop
 
 @section('content')
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('plans.update', $plan->url) }}" class="form" method="POST">
+            <form action="{{ route('profiles.update', $profile->id) }}" class="form" method="POST">
                 @method('PUT')
-                @include('admin.pages.plans._partials.form')
+                @include('admin.pages.profiles._partials.form')
                 <div class="form-group">
                     <button type="submit" class="btn btn-success btn-sm">Salvar</button>
                 </div>

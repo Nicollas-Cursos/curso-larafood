@@ -230,6 +230,11 @@ return [
             'icon' => 'fas fa-list-alt',
             'url'  => 'admin/plans',
         ],
+        [
+            'text' => 'Perfis',
+            'icon' => 'fas fa-user-circle',
+            'url'  => 'admin/profiles',
+        ],
     ],
 
     /*
