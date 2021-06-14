@@ -10,10 +10,10 @@ class SiteController extends Controller
 {
     public function index()
     {
-        $plans = Plan::all();
+        $plans = Plan::with("details")->orderBy('price', 'ASC')->get();
 
-        return view('site.pages.home.index', [
-            'plans' => $plans
+        return view("site.pages.home.index", [
+            "plans" => $plans
         ]);
     }
 }
