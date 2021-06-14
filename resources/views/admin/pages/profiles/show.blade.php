@@ -30,6 +30,7 @@
                 </button>
             </form>
             <a href="{{ route('profile.permissions', $profile->id) }}" class="btn btn-dark btn-sm">Ver permissões desse perfil</a>
+            <a href="{{ route('profile.plans', $profile->id) }}" class="btn btn-dark btn-sm">Ver planos desse perfil</a>
         </div>
     </div>
 @stop

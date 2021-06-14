@@ -31,10 +31,11 @@
             <form action="{{ route('plans.destroy', $plan->url) }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-sm btn-danger">
+                <button type="submit" class="btn btn-sm btn-danger mb-1">
                     Deletar esse plano
                 </button>
             </form>
+            <a href="{{ route('plan.profiles', $plan->id) }}" class="btn btn-sm btn-dark">Ver perfis deste plano</a>
         </div>
     </div>
 @stop

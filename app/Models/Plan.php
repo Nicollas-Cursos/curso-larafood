@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Profile;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Plan extends Model
 {
@@ -13,6 +14,14 @@ class Plan extends Model
         "name", "url", "price", "description"
     ];
 
+    /**
+     * Get Profiles
+     */
+    public function profiles()
+    {
+        return $this->belongsToMany(Profile::class);
+    }
+
     public static function search($filter = null)
     {
         return Plan::query()
@@ -21,5 +30,22 @@ class Plan extends Model
                       ->orWhere("description", "LIKE", "%{$filter}%");
             })
             ->paginate();
+    }
+
+    /**
+     * Profiles not linked with this plan
+     */
+    public function profilesAvailable($filter = null)
+    {
+        return Profile::whereNotIn("profiles.id", function ($query) {
+            $query->select("plan_profile.profile_id")
+                ->from("plan_profile")
+                ->whereRaw("plan_profile.plan_id = {$this->id}");
+        })->where(function ($query) use ($filter) {
+            if (!$filter) return;
+
+            $query->where("profiles.name", "LIKE", "%{$filter}%")
+                ->orWhere("profiles.description", "LIKE", "%{$filter}%");
+        })->paginate();
     }
 }

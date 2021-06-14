@@ -17,9 +17,9 @@ class Permission extends Model
     public static function search($filter = null)
     {
         return Permission::query()
-            ->where(function($query) use ($filter) {
+            ->where(function ($query) use ($filter) {
                 $query->where("name", "LIKE", "%{$filter}%")
-                      ->orWhere("description", "LIKE", "%{$filter}%");
+                    ->orWhere("description", "LIKE", "%{$filter}%");
             })
             ->paginate();
     }
@@ -33,7 +33,7 @@ class Permission extends Model
     }
 
     /**
-     * Permissions not linked with this profile
+     * Profiles not linked with this permission
      */
     public function profilesAvailable($filter = null)
     {
@@ -41,12 +41,11 @@ class Permission extends Model
             $query->select("permission_profile.profile_id")
                 ->from("permission_profile")
                 ->whereRaw("permission_profile.permission_id = {$this->id}");
-        })
-            ->where(function ($query) use ($filter) {
-                if (!$filter) return;
+        })->where(function ($query) use ($filter) {
+            if (!$filter) return;
 
-                $query->where("profiles.name", "LIKE", "%{$filter}%")
-                    ->orWhere("profiles.description", "LIKE", "%{$filter}%");
-            })->paginate();
+            $query->where("profiles.name", "LIKE", "%{$filter}%")
+                ->orWhere("profiles.description", "LIKE", "%{$filter}%");
+        })->paginate();
     }
 }

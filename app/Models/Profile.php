@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Plan;
 use App\Models\Permission;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -33,6 +34,14 @@ class Profile extends Model
     }
 
     /**
+     * Get plans
+     */
+    public function plans()
+    {
+        return $this->belongsToMany(Plan::class);
+    }
+
+    /**
      * Permissions not linked with this profile
      */
     public function permissionsAvailable($filter = null)
@@ -41,12 +50,28 @@ class Profile extends Model
             $query->select("permission_profile.permission_id")
                 ->from("permission_profile")
                 ->whereRaw("permission_profile.profile_id = {$this->id}");
-        })
-            ->where(function ($query) use ($filter) {
-                if (!$filter) return;
+        })->where(function ($query) use ($filter) {
+            if (!$filter) return;
 
-                $query->where("permissions.name", "LIKE", "%{$filter}%")
-                    ->orWhere("permissions.description", "LIKE", "%{$filter}%");
-            })->paginate();
+            $query->where("permissions.name", "LIKE", "%{$filter}%")
+                ->orWhere("permissions.description", "LIKE", "%{$filter}%");
+        })->paginate();
+    }
+
+     /**
+     * Plans not linked with this profile
+     */
+    public function plansAvailable($filter = null)
+    {
+        return Plan::whereNotIn("plans.id", function ($query) {
+            $query->select("plan_profile.plan_id")
+                ->from("plan_profile")
+                ->whereRaw("plan_profile.profile_id = {$this->id}");
+        })->where(function ($query) use ($filter) {
+            if (!$filter) return;
+
+            $query->where("plans.name", "LIKE", "%{$filter}%")
+                ->orWhere("plans.description", "LIKE", "%{$filter}%");
+        })->paginate();
     }
 }

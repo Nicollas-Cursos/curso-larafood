@@ -6,11 +6,30 @@ use App\Http\Controllers\Admin\{
     ACL\ProfileController,
     ACL\PermissionController,
     ACL\PermissionProfileController,
-    ACL\ProfilePermissionController
+    ACL\ProfilePermissionController,
+    ACL\ProfilePlanController,
+    ACL\PlanProfileController
 };
 
 Route::prefix('admin')
     ->group(function() {
+
+        /**
+         * Profiles x Plans
+         */
+        Route::get('profile/{id}/plan/{idPlan}/detach', [PlanProfileController::class, 'detachPlanProfile'])->name('profile.plan.detach');
+        Route::post('profile/{id}/plans', [PlanProfileController::class, 'attachPlanProfile'])->name('profile.plans.attach');
+        Route::any('profile/{id}/plans/create', [PlanProfileController::class, 'plansAvailable'])->name('profile.plans.available');
+        Route::get('profile/{id}/plans', [PlanProfileController::class, 'plans'])->name('profile.plans');
+
+
+        /**
+         * Plans x Profiles
+         */
+        Route::get('plan/{id}/profile/{idProf}/detach', [ProfilePlanController::class, 'detachProfilePlan'])->name('plan.profile.detach');
+        Route::post('plan/{id}/profiles', [ProfilePlanController::class, 'attachProfilePlan'])->name('plan.profiles.attach');
+        Route::any('plan/{id}/profiles/create', [ProfilePlanController::class, 'profilesAvailable'])->name('plan.profiles.available');
+        Route::get('plan/{id}/profiles', [ProfilePlanController::class, 'profiles'])->name('plan.profiles');
 
         /**
          * Permissions x Profile
@@ -19,6 +38,7 @@ Route::prefix('admin')
         Route::post('permission/{id}/profiles', [ProfilePermissionController::class, 'attachProfilePermission'])->name('permission.profiles.attach');
         Route::any('permission/{id}/profiles/create', [ProfilePermissionController::class, 'profilesAvailable'])->name('permission.profiles.available');
         Route::get('permission/{id}/profiles', [ProfilePermissionController::class, 'profiles'])->name('permission.profiles');
+        
         /**
          * Profile x Permissions
          */
