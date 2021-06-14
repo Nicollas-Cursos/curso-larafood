@@ -4,6 +4,7 @@
 
 @section('content_header')
     <h1 class="mb-2">{{ $plan->name }}</h1>
+    @include("admin.includes.alerts")
 @stop
 
 @section('content')
@@ -36,6 +37,7 @@
                 </button>
             </form>
             <a href="{{ route('plan.profiles', $plan->id) }}" class="btn btn-sm btn-dark">Ver perfis deste plano</a>
+            <a href="{{ route('details.plan.index', $plan->url) }}" class="btn btn-sm btn-dark">Ver detalhes deste plano</a>
         </div>
     </div>
 @stop
