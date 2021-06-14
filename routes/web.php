@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\{
 };
 
 Route::prefix('admin')
+    ->middleware('auth')
     ->group(function() {
 
         /**
@@ -79,3 +80,8 @@ Route::prefix('admin')
 Route::get('/', function () {
     return view('welcome');
 });
+
+/**
+ * Auth Routes
+ */
+Auth::routes();
