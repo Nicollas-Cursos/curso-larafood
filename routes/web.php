@@ -93,8 +93,8 @@ Route::prefix('admin')
 Route::namespace('Site')
     ->name('site.')
     ->group(function() {
+        Route::get('/plan/{url}', [SiteController::class, 'plan'])->name('plan');
         Route::get('/', [SiteController::class, 'index'])->name('home');
-
     });
 
 /**
