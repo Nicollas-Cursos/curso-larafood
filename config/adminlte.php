@@ -240,6 +240,11 @@ return [
             'icon' => 'fas fa-lock',
             'url'  => 'admin/permissions',
         ],
+        [
+            'text' => 'Usuários',
+            'icon' => 'fas fa-users',
+            'url'  => 'admin/users',
+        ],
     ],
 
     /*

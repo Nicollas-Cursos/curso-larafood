@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -20,6 +21,7 @@ class User extends Authenticatable
         "name",
         "email",
         "password",
+        "tenant_id"
     ];
 
     /**
@@ -40,4 +42,35 @@ class User extends Authenticatable
     protected $casts = [
         "email_verified_at" => "datetime",
     ];
+
+     /**
+     * Scope a query to only include tenant user.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeTenantUser(Builder $query)
+    {
+        return $query->where('tenant_id', auth()->user()->tenant_id);
+    }
+
+    /**
+     * Get tenant of this user
+     */
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class);
+    }
+
+    public static function search($filter = null)
+    {
+        return User::query()
+            ->where(function ($query) use ($filter) {
+                $query->where("name", "LIKE", "%{$filter}%")
+                    ->orWhere("email", $filter);
+            })
+            ->latest()
+            ->tenantUser()
+            ->paginate();
+    }
 }

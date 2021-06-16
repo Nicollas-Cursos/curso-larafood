@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{
     PlanController,
     DetailPlanController,
+    UserController,
     ACL\ProfileController,
     ACL\PermissionController,
     ACL\PermissionProfileController,
@@ -16,6 +17,12 @@ use App\Http\Controllers\Site\SiteController;
 Route::prefix('admin')
     ->middleware('auth')
     ->group(function() {
+
+         /**
+         * Routes Users
+         */
+        Route::any('users/search', [UserController::class, 'search'])->name('users.search');
+        Route::resource('users', UserController::class);
 
         /**
          * Profiles x Plans
