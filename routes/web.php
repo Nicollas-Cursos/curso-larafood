@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\{
     PlanController,
     DetailPlanController,
     UserController,
+    CategoryController,
     ACL\ProfileController,
     ACL\PermissionController,
     ACL\PermissionProfileController,
@@ -17,6 +18,12 @@ use App\Http\Controllers\Site\SiteController;
 Route::prefix('admin')
     ->middleware('auth')
     ->group(function() {
+
+         /**
+         * Routes Categories
+         */
+        Route::any('categories/search', [CategoryController::class, 'search'])->name('categories.search');
+        Route::resource('categories', CategoryController::class);
 
          /**
          * Routes Users
