@@ -9,6 +9,12 @@ use App\Http\Requests\StoreUpdatePlan;
 
 class PlanController extends Controller
 {
+    
+    public function __construct()
+    {
+        $this->middleware("can:plans");
+    }
+
     public function index()
     {
         $plans = Plan::latest()->paginate();

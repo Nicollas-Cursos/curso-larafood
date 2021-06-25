@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\{
     ProductController,
     CategoryProductController,
     TableController,
+    TenantController,
     ACL\ProfileController,
     ACL\PermissionController,
     ACL\PermissionProfileController,
@@ -21,6 +22,12 @@ use App\Http\Controllers\Site\SiteController;
 Route::prefix('admin')
     ->middleware('auth')
     ->group(function() {
+
+         /**
+         * Routes Tenants
+         */
+        Route::any('tenants/search', [TenantController::class, 'search'])->name('tenants.search');
+        Route::resource('tenants', TenantController::class);
 
         /**
          * Routes Tables

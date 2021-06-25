@@ -9,6 +9,11 @@ use App\Http\Controllers\Controller;
 
 class ProfilePlanController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("can:plans");
+    }
+
     public function profiles($planId)
     {
         if (!$plan = Plan::find($planId)) {

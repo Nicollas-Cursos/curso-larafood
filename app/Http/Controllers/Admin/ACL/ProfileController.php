@@ -9,6 +9,11 @@ use App\Http\Requests\StoreUpdateProfile;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("can:profiles");
+    }
+
     /**
      * Display a listing of the resource.
      *

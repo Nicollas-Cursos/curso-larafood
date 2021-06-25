@@ -9,6 +9,11 @@ use App\Http\Controllers\Controller;
 
 class CategoryProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("can:products");
+    }
+
     public function categories($productId)
     {
         if (!$product = Product::find($productId)) {

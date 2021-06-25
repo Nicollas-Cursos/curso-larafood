@@ -9,6 +9,11 @@ use App\Http\Controllers\Controller;
 
 class ProfilePermissionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("can:permissions");
+    }
+
     public function profiles($permissionId)
     {
         if (!$permission = Permission::find($permissionId)) {

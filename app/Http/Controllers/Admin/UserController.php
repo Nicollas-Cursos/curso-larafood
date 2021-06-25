@@ -10,6 +10,11 @@ use App\Http\Requests\StoreUpdateUser;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("can:users");
+    }
+
     /**
      * Display a listing of the resource.
      *

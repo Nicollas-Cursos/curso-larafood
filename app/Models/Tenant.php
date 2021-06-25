@@ -25,4 +25,14 @@ class Tenant extends Model
     {
         return $this->belongsTo(Plan::class);
     }
+
+    public static function search($filter = null)
+    {
+        return Tenant::query()
+            ->where(function ($query) use ($filter) {
+                $query->where("name", "LIKE", "%{$filter}%");
+            })
+            ->latest()
+            ->paginate();
+    }
 }
