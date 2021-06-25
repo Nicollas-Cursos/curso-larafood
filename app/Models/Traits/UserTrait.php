@@ -41,8 +41,10 @@ trait UserTrait
         $roles = $this->roles()->with('permissions')->get();
         $permissions = [];
 
-        foreach($roles->permissions as $permission) {
-            $permissions[] = $permission->name;
+        foreach($roles as $role) {
+            foreach($role->permissions as $permission) {
+                $permissions[] = $permission->name;
+            }
         }
 
         return $permissions;

@@ -25,7 +25,7 @@
     </div>
 
     <h1 class="mb-2">Permissões do Cargo: <b>{{ $role->name }}</b></h1>
-    <a href="{{ route('profile.permissions.available', $role->id) }}" class="btn btn-sm btn-success"><i class="fas fa-plus mr-1"></i> Adicionar Permissão</a>
+    <a href="{{ route('role.permissions.available', $role->id) }}" class="btn btn-sm btn-success"><i class="fas fa-plus mr-1"></i> Adicionar Permissão</a>
 @stop
 
 @section('content')
