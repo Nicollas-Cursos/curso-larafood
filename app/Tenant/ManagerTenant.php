@@ -16,6 +16,11 @@ class ManagerTenant
         return auth()->user()->tenant;
     }
 
+    public function getTenantUuid()
+    {
+        return $this->getTenant()->uuid;
+    }
+
     public function isSuperAdmin(?String $email = null): bool
     {
         $email = $email ?: auth()->user()->email;

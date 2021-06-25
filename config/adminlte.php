@@ -250,6 +250,11 @@ return [
             'icon' => 'fas fa-layer-group',
             'url'  => 'admin/categories',
         ],
+        [
+            'text' => 'Produtos',
+            'icon' => 'fas fa-layer-group',
+            'url'  => 'admin/products',
+        ],
     ],
 
     /*

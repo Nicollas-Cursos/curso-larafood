@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\{
     DetailPlanController,
     UserController,
     CategoryController,
+    ProductController,
     ACL\ProfileController,
     ACL\PermissionController,
     ACL\PermissionProfileController,
@@ -18,6 +19,12 @@ use App\Http\Controllers\Site\SiteController;
 Route::prefix('admin')
     ->middleware('auth')
     ->group(function() {
+
+         /**
+         * Routes Products
+         */
+        Route::any('products/search', [ProductController::class, 'search'])->name('products.search');
+        Route::resource('products', ProductController::class);
 
          /**
          * Routes Categories

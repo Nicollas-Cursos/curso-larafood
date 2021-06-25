@@ -6,27 +6,27 @@ use App\Tenant\Traits\TenantTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Category extends Model
+class Product extends Model
 {
     use HasFactory, TenantTrait;
 
     protected $fillable = [
-        'name', 'url', 'description'
+        'title', 'description', 'flag', 'price', 'image'
     ];
 
     /**
-     * Return all products of this category
+     * Return all categories of this product
      */
-    public function products()
+    public function categories()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Category::class);
     }
 
     public static function search($filter = null)
     {
         return Category::query()
             ->where(function($query) use ($filter) {
-                $query->where("name", "LIKE", "%{$filter}%")
+                $query->where("title", "LIKE", "%{$filter}%")
                       ->orWhere("description", "LIKE", "%{$filter}%");
             })
             ->paginate();
