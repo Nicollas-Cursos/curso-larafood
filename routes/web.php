@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\{
     CategoryController,
     ProductController,
     CategoryProductController,
+    TableController,
     ACL\ProfileController,
     ACL\PermissionController,
     ACL\PermissionProfileController,
@@ -20,6 +21,12 @@ use App\Http\Controllers\Site\SiteController;
 Route::prefix('admin')
     ->middleware('auth')
     ->group(function() {
+
+        /**
+         * Routes Tables
+         */
+        Route::any('tables/search', [TableController::class, 'search'])->name('tables.search');
+        Route::resource('tables', TableController::class);
 
         /**
          * Category x Product
