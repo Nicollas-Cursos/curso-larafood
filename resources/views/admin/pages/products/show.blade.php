@@ -32,9 +32,10 @@
             <form action="{{ route('products.destroy', $product->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-sm btn-danger mb-1">
+                <button type="submit" class="btn btn-sm btn-danger">
                     Deletar esse produto
                 </button>
+                <a href="{{ route('product.categories', $product->id) }}" class="btn btn-sm btn-dark">Ver categorias desse produto</a>
             </form>
         </div>
     </div>

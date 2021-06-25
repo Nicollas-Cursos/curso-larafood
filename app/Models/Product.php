@@ -31,4 +31,17 @@ class Product extends Model
             })
             ->paginate();
     }
+
+    public function categoriesAvailable($filter = null)
+    {
+        return Category::whereNotIn("categories.id", function ($query) {
+            $query->select("category_product.category_id")
+                ->from("category_product")
+                ->whereRaw("category_product.product_id = {$this->id}");
+        })->where(function ($query) use ($filter) {
+            if (!$filter) return;
+
+            $query->where("categories.name", "LIKE", "%{$filter}%");
+        })->paginate();
+    }
 }

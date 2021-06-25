@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\{
     UserController,
     CategoryController,
     ProductController,
+    CategoryProductController,
     ACL\ProfileController,
     ACL\PermissionController,
     ACL\PermissionProfileController,
@@ -19,6 +20,15 @@ use App\Http\Controllers\Site\SiteController;
 Route::prefix('admin')
     ->middleware('auth')
     ->group(function() {
+
+        /**
+         * Category x Product
+         */
+        Route::get('product/{id}/category/{idCategory}/detach', [CategoryProductController::class, 'detachCategoryProduct'])->name('product.category.detach');
+        Route::post('product/{id}/categories', [CategoryProductController::class, 'attachCategoriesProduct'])->name('product.categories.attach');
+        Route::any('product/{id}/categories/create', [CategoryProductController::class, 'categoriesAvailable'])->name('product.categories.available');
+        Route::get('product/{id}/categories', [CategoryProductController::class, 'categories'])->name('product.categories');
+
 
          /**
          * Routes Products
