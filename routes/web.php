@@ -15,13 +15,29 @@ use App\Http\Controllers\Admin\{
     ACL\PermissionProfileController,
     ACL\ProfilePermissionController,
     ACL\ProfilePlanController,
-    ACL\PlanProfileController
+    ACL\PlanProfileController,
+    ACL\RoleController,
+    ACL\PermissionRoleController
 };
 use App\Http\Controllers\Site\SiteController;
 
 Route::prefix('admin')
     ->middleware('auth')
     ->group(function() {
+
+        /**
+         * Permissions x Role
+         */
+        Route::get('role/{id}/permission/{idPermission}/detach', [PermissionRoleController::class, 'detachPermissionRole'])->name('role.permission.detach');
+        Route::post('role/{id}/permissions', [PermissionRoleController::class, 'attachPermissionsRole'])->name('role.permissions.attach');
+        Route::any('role/{id}/permissions/create', [PermissionRoleController::class, 'permissionsAvailable'])->name('role.permissions.available');
+        Route::get('role/{id}/permissions', [PermissionRoleController::class, 'permissions'])->name('role.permissions');
+
+        /**
+         * Routes Roles
+         */
+        Route::any('roles/search', [RoleController::class, 'search'])->name('roles.search');
+        Route::resource('roles', RoleController::class);
 
          /**
          * Routes Tenants
