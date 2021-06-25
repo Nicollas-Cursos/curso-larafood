@@ -26,9 +26,10 @@
             <form action="{{ route('users.destroy', $user->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-sm btn-danger mb-1">
+                <button type="submit" class="btn btn-sm btn-danger">
                     Deletar esse usuário
                 </button>
+                <a href="{{ route('user.roles', $user->id) }}" class="btn btn-dark btn-sm">Ver cargos desse usuário</a>
             </form>
         </div>
     </div>

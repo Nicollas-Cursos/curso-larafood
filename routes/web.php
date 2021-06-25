@@ -17,13 +17,23 @@ use App\Http\Controllers\Admin\{
     ACL\ProfilePlanController,
     ACL\PlanProfileController,
     ACL\RoleController,
-    ACL\PermissionRoleController
+    ACL\PermissionRoleController,
+    ACL\RoleUserController
 };
 use App\Http\Controllers\Site\SiteController;
 
 Route::prefix('admin')
     ->middleware('auth')
     ->group(function() {
+
+        /**
+         * Roles x User
+         */
+        Route::get('user/{id}/role/{idRole}/detach', [RoleUserController::class, 'detachRoleUser'])->name('user.role.detach');
+        Route::post('user/{id}/roles', [RoleUserController::class, 'attachRolesUser'])->name('user.roles.attach');
+        Route::any('user/{id}/roles/create', [RoleUserController::class, 'rolesAvailable'])->name('user.roles.available');
+        Route::get('user/{id}/roles', [RoleUserController::class, 'roles'])->name('user.roles');
+
 
         /**
          * Permissions x Role

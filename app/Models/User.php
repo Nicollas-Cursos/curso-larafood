@@ -62,6 +62,14 @@ class User extends Authenticatable
         return $this->belongsTo(Tenant::class);
     }
 
+    /**
+     * Get Roles
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
     public static function search($filter = null)
     {
         return User::query()
@@ -72,5 +80,21 @@ class User extends Authenticatable
             ->latest()
             ->tenantUser()
             ->paginate();
+    }
+
+    /**
+     * Roles not linked with this permission
+     */
+    public function rolesAvailable($filter = null)
+    {
+        return Role::whereNotIn("roles.id", function ($query) {
+            $query->select("role_user.role_id")
+                ->from("role_user")
+                ->whereRaw("role_user.user_id = {$this->id}");
+        })->where(function ($query) use ($filter) {
+            if (!$filter) return;
+
+            $query->where("roles.name", "LIKE", "%{$filter}%");
+        })->paginate();
     }
 }

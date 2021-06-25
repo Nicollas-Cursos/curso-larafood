@@ -14,6 +14,14 @@ class Role extends Model
     ];
 
     /**
+     * Get Users
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    /**
      * Get Permissions
      */
     public function permissions()
@@ -29,21 +37,5 @@ class Role extends Model
                     ->orWhere("description", "LIKE", "%{$filter}%");
             })
             ->paginate();
-    }
-
-    /**
-     * Profiles not linked with this permission
-     */
-    public function profilesAvailable($filter = null)
-    {
-        return Profile::whereNotIn("permissions.id", function ($query) {
-            $query->select("permission_role.permission_id")
-                ->from("permission_role")
-                ->whereRaw("permission_role.profile_id = {$this->id}");
-        })->where(function ($query) use ($filter) {
-            if (!$filter) return;
-
-            $query->where("permissions.name", "LIKE", "%{$filter}%");
-        })->paginate();
     }
 }
