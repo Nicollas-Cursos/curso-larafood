@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use App\Models\Plan;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use App\Repositories\Contracts\ITenantRepository;
 
 class TenantService
 {
@@ -13,6 +13,19 @@ class TenantService
 
     /** @var array */
     protected $data = [];
+
+    /** @var object */
+    protected $iRepository;
+
+    public function __construct(ITenantRepository $repository)
+    {
+        $this->iRepository = $repository;
+    }
+
+    public function getAllTenants()
+    {
+        return $this->iRepository->getAllTenants();
+    }
 
     public function make(Plan $plan, Array $data)
     {
